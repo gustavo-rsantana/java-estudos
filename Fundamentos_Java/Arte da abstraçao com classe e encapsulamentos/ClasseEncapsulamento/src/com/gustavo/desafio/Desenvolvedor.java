@@ -12,22 +12,7 @@ public class Desenvolvedor extends Funcionario implements Trabalhador{
     }
 
     @Override
-    public void mostraDados() {
-        super.mostraDados();
-        System.out.printf("""
-                =========================
-                Funcionário
-                
-                Nome: %s
-                
-                Idade: %d
-                
-                CPF: %s
-                
-                Salário: %.2f
-                
-                Cargo: %s
-                =========================
-                """, this.nome, this.idade, this.cpf, this.salario, this.cargo);
+    public String getCargo() {
+        return cargo;
     }
 }
