@@ -23,7 +23,11 @@ public class Desafio {
         altura = scanner.nextFloat();
         System.out.print("Sexo M/F: ");
         sexo = scanner.next().toLowerCase().charAt(0);
-        String tipoSexo = sexo == 'm' ? "Masculino" : "Feminino";
+        String tipoSexo = switch (sexo){
+            case 'm' -> "Masculino";
+            case 'f' -> "Feminino";
+            default -> "Opção Invalida";
+        };
         System.out.print("""
                 Estado civil
                 1 - Solteiro(a)
@@ -32,19 +36,13 @@ public class Desafio {
                 4 - Viúvo(a)
                 """);
         estadoCivil = scanner.nextInt();
-        String situacaoCivil;
-
-        if (estadoCivil == 1) {
-            situacaoCivil = "Solteiro(a)";
-        } else if (estadoCivil == 2) {
-            situacaoCivil = "Casado(a)";
-        } else if (estadoCivil == 3) {
-            situacaoCivil = "3 - Divorciado(a)";
-        } else if (estadoCivil == 4) {
-            situacaoCivil = "Viúvo(a)";
-        } else {
-            situacaoCivil = "opção Invalida";
-        }
+        String situacaoCivil = switch (estadoCivil){
+            case 1 -> "Solteiro(a)";
+            case 2 -> "Casado(a)";
+            case 3 -> "Divorciado(a)";
+            case 4 -> "Viúvo(a)";
+            default -> "Opção Invalida";
+        };
 
         var idade = LocalDate.now().getYear() - anoNascimento;
         var maiorIdade = idade >= 18 ? "Maior de idade." : "Menor de idade";
