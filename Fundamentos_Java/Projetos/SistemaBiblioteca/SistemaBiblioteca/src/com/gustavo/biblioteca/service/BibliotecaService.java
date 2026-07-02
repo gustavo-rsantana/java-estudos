@@ -39,46 +39,45 @@ public class BibliotecaService {
         }
         usuariosPorMatricula.put(usuario.getMatricula(), usuario);
     }
-    public void emprestarLivro(Emprestimo emprestimo) {
-        if (!buscarUsuario(emprestimo.getUsuario().getMatricula()).isPresent()) {
+    public void emprestarLivro(String isbn, int matricula, String observacao) {
+        Optional<Usuario> usuarioEncontrado = buscarUsuario(matricula);
+        Optional<Livro> livroEncontrado = buscarLivro(isbn);
+
+
+        if (usuarioEncontrado.isEmpty()) {
             System.out.println("Usuário não encontrado");
             return;
         }
 
-        if(!buscarLivro(emprestimo.getLivro().getIsbn()).isPresent()) {
+        if(livroEncontrado.isEmpty()) {
             System.out.println("Livro não encontrado");
             return;
         }
 
-        var lista = listarLivrosDisponiveis();
+        Livro livro = livroEncontrado.get();
 
-        Optional<Livro> livroSelecionado = lista.stream().
-                filter(livro -> emprestimo.getLivro().getIsbn().equals(livro.getIsbn()))
-                .findFirst();
-
-
-        if (livroSelecionado.isPresent()) {
-            Livro livro = livroSelecionado.get();
-            livro.setStatus(StatusLivro.EMPRESTADO);
-        } else {
-            System.out.println("Livro não disponivel.");
+        if (!StatusLivro.DISPONIVEL.equals(livro.getStatus())) {
+            System.out.println("Livro não disponível.");
             return;
         }
 
-        novoEmprestimo(emprestimo);
+        Usuario usuario = usuarioEncontrado.get();
+
+        Emprestimo emprestimo = new Emprestimo(
+                usuario,
+                livro,
+                LocalDate.now(),
+                LocalDate.now().plusDays(5),
+                observacao
+        );
+
+        livro.setStatus(StatusLivro.EMPRESTADO);
         emprestimos.add(emprestimo);
 
 
     }
 
-    public void novoEmprestimo(Emprestimo emprestimo ) {
-        Usuario usuario = emprestimo.getUsuario();
-        Livro livro = emprestimo.getLivro();
-        LocalDate date = LocalDate.now();
-        LocalDate previsaoDevolucao = LocalDate.now().plusDays(5);
-        String observacao = emprestimo.getObservacao();
-        Emprestimo novo = new Emprestimo(usuario, livro, date, previsaoDevolucao, observacao);
-    }
+
 
 
     public void devolverLivro(String isbn) {}
