@@ -16,7 +16,6 @@ public class BibliotecaService {
     private List<Livro> livros;
     private Map<String, Livro> livrosPorIsbn;
     private Map<Integer, Usuario> usuariosPorMatricula;
-    private Map<String, Emprestimo> emprestimosPorIsbn;
     private List<Emprestimo> emprestimos;
 
     public BibliotecaService() {
@@ -111,10 +110,11 @@ public class BibliotecaService {
                 LocalDate.now()
         );
 
-        if (dias != 0) {
-            Long multa = dias * 2;
+        if (dias > 0) {
+            BigDecimal multa = BigDecimal.valueOf(dias)
+                            .multiply(BigDecimal.valueOf(2));
             System.out.println("Foi aplicado uma multa no valor de R$" + multa);
-            emprestimo.aplicarMulta(BigDecimal.valueOf(multa));
+            emprestimo.aplicarMulta(multa);
         }
 
       livro.setStatus(StatusLivro.DISPONIVEL);
