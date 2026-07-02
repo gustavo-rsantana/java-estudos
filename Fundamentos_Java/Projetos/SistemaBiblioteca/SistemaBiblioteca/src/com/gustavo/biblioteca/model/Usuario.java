@@ -53,7 +53,7 @@ public class Usuario {
         return livrosJaLidos;
     }
 
-    public void adicionarLivros(Livro livro) {
+    public void adicionarLivroLido(Livro livro) {
         livrosJaLidos.add(livro);
     }
 

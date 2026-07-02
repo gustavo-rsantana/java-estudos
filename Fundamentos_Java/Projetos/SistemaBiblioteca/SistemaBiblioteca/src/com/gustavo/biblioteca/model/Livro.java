@@ -7,19 +7,19 @@ public class Livro {
     private String titulo;
     private String genero;
     private String autor;
-    private LocalDate anoPublicacao;
+    private LocalDate dataPublicacao;
     private  String editora;
     private int edicao;
     private String resumo;
     private StatusLivro status;
 
 
-    public Livro(String isbn, String titulo, String genero, String autor, int anoPublicacao, String editora, int edicao, String resumo, StatusLivro status) {
+    public Livro(String isbn, String titulo, String genero, String autor, int dataPublicacao, String editora, int edicao, String resumo, StatusLivro status) {
         this.isbn = isbn;
         this.titulo = titulo;
         this.genero = genero;
         this.autor = autor;
-        this.anoPublicacao = anoPublicacao;
+        this.dataPublicacao = dataPublicacao;
         this.editora = editora;
         this.edicao = edicao;
         this.resumo = resumo;
@@ -60,7 +60,7 @@ public class Livro {
     }
 
     public int getAnoPublicacao() {
-        return anoPublicacao;
+        return dataPublicacao;
     }
 
     public String getEditora() {
@@ -87,7 +87,7 @@ public class Livro {
                 ", titulo='" + titulo + '\'' +
                 ", genero='" + genero + '\'' +
                 ", autor='" + autor + '\'' +
-                ", anoPublicacao=" + anoPublicacao +
+                ", dataPublicacao=" + dataPublicacao +
                 ", editora='" + editora + '\'' +
                 ", edicao=" + edicao +
                 ", resumo='" + resumo + '\'' +
