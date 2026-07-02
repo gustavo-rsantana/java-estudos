@@ -10,7 +10,7 @@ import java.util.*;
 public class BibliotecaService {
     private List<Livro> livros;
     private Map<String, Livro> livrosPorIsbn;
-    private Map<String, Usuario> usuariosPorMatricula;
+    private Map<Integer, Usuario> usuariosPorMatricula;
     private List<Emprestimo> emprestimos;
 
     public BibliotecaService() {
@@ -30,11 +30,11 @@ public class BibliotecaService {
         livrosPorIsbn.put(livro.getIsbn(), livro);
     }
     public void cadastrarUsuario(Usuario usuario) {
-        if (buscarUsuario(usuario.getCpf()).isPresent()) {
-            System.out.println("Usuario Ja cadastrado.");
+        if (buscarUsuario(usuario.getMatricula()).isPresent()) {
+            System.out.println("Usuário já cadastrado.");
             return;
         }
-        usuariosPorMatricula.put(usuario.getCpf(), usuario);
+        usuariosPorMatricula.put(usuario.getMatricula(), usuario);
     }
     public void emprestarLivro(Emprestimo emprestimo) {}
     public void devolverLivro(String isbn) {}
@@ -45,8 +45,8 @@ public class BibliotecaService {
         return Optional.ofNullable(livroSelecionado);
     }
 
-    public Optional<Usuario> buscarUsuario(String cpf) {
-        Usuario usuarioSelecionado = usuariosPorMatricula.get(cpf);
+    public Optional<Usuario> buscarUsuario(int matricula) {
+        Usuario usuarioSelecionado = usuariosPorMatricula.get(matricula);
 
         return Optional.ofNullable(usuarioSelecionado);
     }
