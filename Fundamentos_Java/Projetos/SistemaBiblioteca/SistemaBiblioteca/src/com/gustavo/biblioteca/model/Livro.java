@@ -24,9 +24,6 @@ public class Livro {
         this.status = status;
     }
 
-    public void setAnoPublicacao(int anoPublicacao) {
-        this.anoPublicacao = anoPublicacao;
-    }
 
     public void setEditora(String editora) {
         this.editora = editora;
