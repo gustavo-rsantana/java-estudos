@@ -13,8 +13,7 @@ public class Emprestimo {
     private String observacao;
 
     public Emprestimo(Usuario usuario, Livro livro,
-                      LocalDate dataEmprestimo, LocalDate previsaoDevolucao, String observacao,
-                      BigDecimal multa) {
+                      LocalDate dataEmprestimo, LocalDate previsaoDevolucao, String observacao) {
         this.usuario = usuario;
         this.livro = livro;
         this.dataEmprestimo = dataEmprestimo;
@@ -22,6 +21,7 @@ public class Emprestimo {
         this.observacao = observacao;
         this.multa = BigDecimal.ZERO;
     }
+
 
     public Usuario getUsuario() {
         return usuario;

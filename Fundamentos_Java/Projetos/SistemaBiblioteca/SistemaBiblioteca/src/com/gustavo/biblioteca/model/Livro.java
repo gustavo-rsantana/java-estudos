@@ -1,5 +1,7 @@
 package com.gustavo.biblioteca.model;
 
+import com.gustavo.biblioteca.enums.StatusLivro;
+
 import java.time.LocalDate;
 
 public class Livro {
@@ -14,7 +16,7 @@ public class Livro {
     private StatusLivro status;
 
 
-    public Livro(String isbn, String titulo, String genero, String autor, int dataPublicacao, String editora, int edicao, String resumo, StatusLivro status) {
+    public Livro(String isbn, String titulo, String genero, String autor, LocalDate dataPublicacao, String editora, int edicao, String resumo, StatusLivro status) {
         this.isbn = isbn;
         this.titulo = titulo;
         this.genero = genero;

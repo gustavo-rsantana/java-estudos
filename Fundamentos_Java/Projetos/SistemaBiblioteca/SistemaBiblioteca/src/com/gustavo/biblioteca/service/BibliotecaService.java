@@ -1,11 +1,14 @@
 package com.gustavo.biblioteca.service;
 
+import com.gustavo.biblioteca.enums.StatusLivro;
 import com.gustavo.biblioteca.model.Emprestimo;
 import com.gustavo.biblioteca.model.Livro;
 import com.gustavo.biblioteca.model.Usuario;
 
+
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class BibliotecaService {
     private List<Livro> livros;
@@ -36,7 +39,48 @@ public class BibliotecaService {
         }
         usuariosPorMatricula.put(usuario.getMatricula(), usuario);
     }
-    public void emprestarLivro(Emprestimo emprestimo) {}
+    public void emprestarLivro(Emprestimo emprestimo) {
+        if (!buscarUsuario(emprestimo.getUsuario().getMatricula()).isPresent()) {
+            System.out.println("Usuário não encontrado");
+            return;
+        }
+
+        if(!buscarLivro(emprestimo.getLivro().getIsbn()).isPresent()) {
+            System.out.println("Livro não encontrado");
+            return;
+        }
+
+        var lista = listarLivrosDisponiveis();
+
+        Optional<Livro> livroSelecionado = lista.stream().
+                filter(livro -> emprestimo.getLivro().getIsbn().equals(livro.getIsbn()))
+                .findFirst();
+
+
+        if (livroSelecionado.isPresent()) {
+            Livro livro = livroSelecionado.get();
+            livro.setStatus(StatusLivro.EMPRESTADO);
+        } else {
+            System.out.println("Livro não disponivel.");
+            return;
+        }
+
+        novoEmprestimo(emprestimo);
+        emprestimos.add(emprestimo);
+
+
+    }
+
+    public void novoEmprestimo(Emprestimo emprestimo ) {
+        Usuario usuario = emprestimo.getUsuario();
+        Livro livro = emprestimo.getLivro();
+        LocalDate date = LocalDate.now();
+        LocalDate previsaoDevolucao = LocalDate.now().plusDays(5);
+        String observacao = emprestimo.getObservacao();
+        Emprestimo novo = new Emprestimo(usuario, livro, date, previsaoDevolucao, observacao);
+    }
+
+
     public void devolverLivro(String isbn) {}
 
     public Optional<Livro> buscarLivro(String isbn) {
@@ -52,7 +96,11 @@ public class BibliotecaService {
     }
 
     public List<Livro> listarLivrosDisponiveis() {
-        return new ArrayList<>();
+        List<Livro> livrosDisponiveis = livrosPorIsbn.values().stream()
+                .filter( livro -> StatusLivro.DISPONIVEL.equals(livro.getStatus()))
+                .collect(Collectors.toList());
+
+        return livrosDisponiveis;
     }
 
 
