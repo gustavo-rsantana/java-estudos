@@ -80,9 +80,6 @@ public class BibliotecaService {
 
     }
 
-
-
-
     public void devolverLivro(String isbn) {
         Optional<Livro> livroEncontrado = buscarLivro(isbn);
 
@@ -146,6 +143,18 @@ public class BibliotecaService {
     }
 
 
+    public List<Livro> listarLivrosDisponiveis() {
+        return livros.stream()
+                .filter(livro -> livro.getStatus().equals(StatusLivro.DISPONIVEL))
+                .toList();
+    }
+
+
+    public List<Livro> listarLivrosEmprestado() {
+        return livros.stream()
+                .filter(livro -> livro.getStatus().equals(StatusLivro.EMPRESTADO))
+                .toList();
+    }
 
 
 
