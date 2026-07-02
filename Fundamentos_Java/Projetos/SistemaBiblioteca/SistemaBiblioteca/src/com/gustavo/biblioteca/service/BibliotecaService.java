@@ -29,7 +29,13 @@ public class BibliotecaService {
         livros.add(livro);
         livrosPorIsbn.put(livro.getIsbn(), livro);
     }
-    public void cadastrarUsuario(Usuario usuario) {}
+    public void cadastrarUsuario(Usuario usuario) {
+        if (buscarUsuario(usuario.getCpf()).isPresent()) {
+            System.out.println("Usuario Ja cadastrado.");
+            return;
+        }
+        usuariosPorMatricula.put(usuario.getCpf(), usuario);
+    }
     public void emprestarLivro(Emprestimo emprestimo) {}
     public void devolverLivro(String isbn) {}
 
@@ -38,6 +44,13 @@ public class BibliotecaService {
 
         return Optional.ofNullable(livroSelecionado);
     }
+
+    public Optional<Usuario> buscarUsuario(String cpf) {
+        Usuario usuarioSelecionado = usuariosPorMatricula.get(cpf);
+
+        return Optional.ofNullable(usuarioSelecionado);
+    }
+
     public List<Livro> listarLivrosDisponiveis() {
         return new ArrayList<>();
     }
