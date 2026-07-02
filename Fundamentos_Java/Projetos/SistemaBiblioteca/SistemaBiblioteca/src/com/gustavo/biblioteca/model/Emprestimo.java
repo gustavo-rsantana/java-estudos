@@ -8,16 +8,19 @@ public class Emprestimo {
     private Livro livro;
     private LocalDate dataEmprestimo;
     private LocalDate previsaoDevolucao;
-    private LocalDate devolucao;
+    private LocalDate dataDevolucao;
     private BigDecimal multa;
     private String observacao;
 
-    public Emprestimo(Usuario usuario, Livro livro, LocalDate dataEmprestimo, LocalDate previsaoDevolucao, String observacao) {
+    public Emprestimo(Usuario usuario, Livro livro,
+                      LocalDate dataEmprestimo, LocalDate previsaoDevolucao, String observacao,
+                      BigDecimal multa) {
         this.usuario = usuario;
         this.livro = livro;
         this.dataEmprestimo = dataEmprestimo;
         this.previsaoDevolucao = previsaoDevolucao;
         this.observacao = observacao;
+        this.multa = BigDecimal.ZERO;
     }
 
     public Usuario getUsuario() {
@@ -45,19 +48,19 @@ public class Emprestimo {
     }
 
     public LocalDate getDevolucao() {
-        return devolucao;
+        return dataDevolucao;
     }
 
-    public void setDevolucao(LocalDate devolucao) {
-        this.devolucao = devolucao;
+    public void setDevolucao(LocalDate dataDevolucao) {
+        this.dataDevolucao = dataDevolucao;
     }
 
     public BigDecimal getMulta() {
         return multa;
     }
 
-    public void setMulta(BigDecimal multa) {
-        this.multa = multa;
+    public void aplicarMulta(BigDecimal valor) {
+        this.multa = valor;
     }
 
     public String getObservacao() {
@@ -75,7 +78,7 @@ public class Emprestimo {
                 ", livro=" + livro +
                 ", dataEmprestimo=" + dataEmprestimo +
                 ", previsaoDevolucao=" + previsaoDevolucao +
-                ", devolucao=" + devolucao +
+                ", dataDevolucao=" + dataDevolucao +
                 ", multa=" + multa +
                 ", observacao='" + observacao + '\'' +
                 '}';
