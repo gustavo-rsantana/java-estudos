@@ -1,14 +1,24 @@
 package com.gustavo.biblioteca.model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Usuario {
     private String nome;
     private String cpf;
     private String endereco;
-    private int dataNascimento;
+    private LocalDate dataNascimento;
     private int matricula;
-    private ArrayList<Livro> livrosJaLidos = new ArrayList<>();
+    private List<Livro> livrosJaLidos = new ArrayList<>();
+
+    public Usuario(String nome, String cpf, String endereco, LocalDate dataNascimento, int matricula) {
+        this.nome = nome;
+        this.cpf = cpf;
+        this.endereco = endereco;
+        this.dataNascimento = dataNascimento;
+        this.matricula = matricula;
+    }
 
     public String getNome() {
         return nome;
@@ -31,23 +41,20 @@ public class Usuario {
         this.endereco = endereco;
     }
 
-    public int getDataNascimento() {
+    public LocalDate getDataNascimento() {
         return dataNascimento;
     }
-
-
 
     public int getMatricula() {
         return matricula;
     }
 
-
-    public ArrayList<Livro> getLivrosJaLidos() {
+    public List<Livro> getLivrosJaLidos() {
         return livrosJaLidos;
     }
 
-    public void setLivrosJaLidos(ArrayList<Livro> livrosJaLidos) {
-        this.livrosJaLidos = livrosJaLidos;
+    public void adicionarLivros(Livro livro) {
+        livrosJaLidos.add(livro);
     }
 
     @Override

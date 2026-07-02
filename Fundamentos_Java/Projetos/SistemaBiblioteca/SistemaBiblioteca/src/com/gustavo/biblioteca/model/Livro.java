@@ -1,11 +1,13 @@
 package com.gustavo.biblioteca.model;
 
+import java.time.LocalDate;
+
 public class Livro {
     private String isbn;
     private String titulo;
     private String genero;
     private String autor;
-    private int anoPublicacao;
+    private LocalDate anoPublicacao;
     private  String editora;
     private int edicao;
     private String resumo;
