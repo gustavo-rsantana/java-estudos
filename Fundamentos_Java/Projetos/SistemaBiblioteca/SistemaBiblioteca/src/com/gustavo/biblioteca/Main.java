@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Main {
-    static void main(String[] args) {
+    public static void main(String[] args) {
         BibliotecaService biblioteca = new BibliotecaService();
         Scanner scanner = new Scanner(System.in);
         var sistema = true;
@@ -22,10 +22,10 @@ public class Main {
                 ====================
                 Selecione uma opção
                 1 - Cadastrar Livro.
-                2 - Cadastrar Usuario.
+                2 - Cadastrar Usuário.
                 3 - Emprestar Livro.
                 4 - Devolver Livro.
-                5 - Listar Livros Disponiveis.
+                5 - Listar Livros Disponíveis.
                 6 - Listar Livros Emprestados.
                 0 - Sair do sistema
                 ====================""");
@@ -41,7 +41,7 @@ public class Main {
                 case 5 -> livrosDisponiveis(biblioteca);
                 case 6 -> livrosEmprestados(biblioteca);
                 case 0 -> sistema = false;
-                default -> System.out.println("Opção invalida");
+                default -> System.out.println("Opção inválida");
             }
         }
     }
@@ -66,7 +66,7 @@ public class Main {
         String autor = scanner.nextLine();
 
 
-        System.out.print("Qaundo lançou (DD/MM/AAAA): ");
+        System.out.print("Quando lançou (DD/MM/AAAA): ");
         String dataLancamento = scanner.nextLine();
         dataValida = LocalDate.parse(dataLancamento, formatador);
 
@@ -99,7 +99,7 @@ public class Main {
     private static void novoUsuario(Scanner scanner, BibliotecaService biblioteca) {
         DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate dataValida = null;
-        System.out.println("Cadastrando novo Usuario");
+        System.out.println("Cadastrando novo Usuário");
         scanner.nextLine();
 
         System.out.print("Digite o nome: ");
@@ -137,7 +137,7 @@ public class Main {
 
         System.out.print("Digite a matricula do usuario: ");
         int matricula = scanner.nextInt();
-        scanner.nextLine();1
+        scanner.nextLine();
 
         System.out.print("Observação: ");
         String observacao = scanner.nextLine();
