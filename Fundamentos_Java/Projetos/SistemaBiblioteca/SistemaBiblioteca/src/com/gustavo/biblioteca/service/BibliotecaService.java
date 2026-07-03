@@ -10,7 +10,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class BibliotecaService {
     private List<Livro> livros;
@@ -22,7 +21,6 @@ public class BibliotecaService {
         this.livros = new ArrayList<>();
         this.livrosPorIsbn = new HashMap<>();
         this.usuariosPorMatricula = new HashMap<>();
-        this.emprestimosPorIsbn = new HashMap<>();
         this.emprestimos = new ArrayList<>();
     }
 
