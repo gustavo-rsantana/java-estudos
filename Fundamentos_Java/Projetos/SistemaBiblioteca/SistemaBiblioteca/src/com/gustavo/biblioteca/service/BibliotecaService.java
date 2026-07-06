@@ -2,6 +2,7 @@ package com.gustavo.biblioteca.service;
 
 import com.gustavo.biblioteca.enums.StatusLivro;
 import com.gustavo.biblioteca.exception.LivroNaoEncontradoException;
+import com.gustavo.biblioteca.exception.UsuarioNaoEcontradoException;
 import com.gustavo.biblioteca.model.Emprestimo;
 import com.gustavo.biblioteca.model.Livro;
 import com.gustavo.biblioteca.model.Usuario;
@@ -42,24 +43,13 @@ public class BibliotecaService {
         usuariosPorMatricula.put(usuario.getMatricula(), usuario);
     }
     public void emprestarLivro(String isbn, int matricula, String observacao) {
-        Optional<Usuario> usuarioEncontrado = buscarUsuario(matricula);
-        Optional<Livro> livroEncontrado = buscarLivro(isbn);
-
-
-        if (usuarioEncontrado.isEmpty()) {
-            System.out.println("Usuário não encontrado");
-            return;
-        }
-
-
         Livro livro = buscarLivroObrigatorio(isbn);
+        Usuario usuario = buscarUsuarioObrigatorio(matricula);
 
         if (!StatusLivro.DISPONIVEL.equals(livro.getStatus())) {
             System.out.println("Livro não disponível.");
             return;
         }
-
-        Usuario usuario = usuarioEncontrado.get();
 
         Emprestimo emprestimo = new Emprestimo(
                 usuario,
@@ -76,8 +66,6 @@ public class BibliotecaService {
     }
 
     public void devolverLivro(String isbn) {
-        Optional<Livro> livroEncontrado = buscarLivro(isbn);
-
         Livro livro = buscarLivroObrigatorio(isbn);
 
         Optional<Emprestimo> emprestimoEncontra = buscarEmprestimo(isbn);
@@ -130,6 +118,13 @@ public class BibliotecaService {
         Usuario usuarioSelecionado = usuariosPorMatricula.get(matricula);
 
         return Optional.ofNullable(usuarioSelecionado);
+    }
+
+    public Usuario buscarUsuarioObrigatorio(int matricula) {
+        return buscarUsuario(matricula)
+                .orElseThrow(() -> new UsuarioNaoEcontradoException(
+                        "Usuario nao encontrado com a matricula: " + matricula
+                ));
     }
 
     public Optional<Emprestimo> buscarEmprestimo(String isbn) {
