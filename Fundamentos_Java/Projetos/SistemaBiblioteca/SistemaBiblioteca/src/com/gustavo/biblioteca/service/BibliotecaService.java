@@ -1,6 +1,7 @@
 package com.gustavo.biblioteca.service;
 
 import com.gustavo.biblioteca.enums.StatusLivro;
+import com.gustavo.biblioteca.exception.LivroNaoEncontradoException;
 import com.gustavo.biblioteca.model.Emprestimo;
 import com.gustavo.biblioteca.model.Livro;
 import com.gustavo.biblioteca.model.Usuario;
@@ -50,12 +51,8 @@ public class BibliotecaService {
             return;
         }
 
-        if(livroEncontrado.isEmpty()) {
-            System.out.println("Livro não encontrado");
-            return;
-        }
 
-        Livro livro = livroEncontrado.get();
+        Livro livro = buscarLivroObrigatorio(isbn);
 
         if (!StatusLivro.DISPONIVEL.equals(livro.getStatus())) {
             System.out.println("Livro não disponível.");
@@ -81,12 +78,7 @@ public class BibliotecaService {
     public void devolverLivro(String isbn) {
         Optional<Livro> livroEncontrado = buscarLivro(isbn);
 
-      if (livroEncontrado.isEmpty()) {
-            System.out.println("Livro não encontrado.");
-            return;
-        }
-
-        Livro livro = livroEncontrado.get();
+        Livro livro = buscarLivroObrigatorio(isbn);
 
         Optional<Emprestimo> emprestimoEncontra = buscarEmprestimo(isbn);
 
@@ -125,6 +117,13 @@ public class BibliotecaService {
         Livro livroSelecionado = livrosPorIsbn.get(isbn);
 
         return Optional.ofNullable(livroSelecionado);
+    }
+
+    private Livro buscarLivroObrigatorio(String isbn) {
+        return buscarLivro(isbn)
+                .orElseThrow(() -> new LivroNaoEncontradoException(
+                        "Livro não encontrado para o ISBN: " + isbn
+                ));
     }
 
     public Optional<Usuario> buscarUsuario(int matricula) {
