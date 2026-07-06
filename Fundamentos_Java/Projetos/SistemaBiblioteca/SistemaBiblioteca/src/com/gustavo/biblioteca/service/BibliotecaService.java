@@ -1,8 +1,9 @@
 package com.gustavo.biblioteca.service;
 
 import com.gustavo.biblioteca.enums.StatusLivro;
+import com.gustavo.biblioteca.exception.LivroIndisponivelException;
 import com.gustavo.biblioteca.exception.LivroNaoEncontradoException;
-import com.gustavo.biblioteca.exception.UsuarioNaoEcontradoException;
+import com.gustavo.biblioteca.exception.UsuarioNaoEncontradoException;
 import com.gustavo.biblioteca.model.Emprestimo;
 import com.gustavo.biblioteca.model.Livro;
 import com.gustavo.biblioteca.model.Usuario;
@@ -47,8 +48,7 @@ public class BibliotecaService {
         Usuario usuario = buscarUsuarioObrigatorio(matricula);
 
         if (!StatusLivro.DISPONIVEL.equals(livro.getStatus())) {
-            System.out.println("Livro não disponível.");
-            return;
+            new LivroIndisponivelException("Livro indisponivel no momento!");
         }
 
         Emprestimo emprestimo = new Emprestimo(
@@ -122,8 +122,8 @@ public class BibliotecaService {
 
     public Usuario buscarUsuarioObrigatorio(int matricula) {
         return buscarUsuario(matricula)
-                .orElseThrow(() -> new UsuarioNaoEcontradoException(
-                        "Usuario nao encontrado com a matricula: " + matricula
+                .orElseThrow(() -> new UsuarioNaoEncontradoException(
+                        "Usuário não encontrado com a matrícula: " + matricula
                 ));
     }
 
@@ -140,6 +140,7 @@ public class BibliotecaService {
                 .filter(livro -> livro.getStatus().equals(StatusLivro.DISPONIVEL))
                 .toList();
     }
+
 
 
     public List<Livro> listarLivrosEmprestado() {
