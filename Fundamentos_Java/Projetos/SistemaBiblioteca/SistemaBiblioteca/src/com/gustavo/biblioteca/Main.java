@@ -1,5 +1,6 @@
 package com.gustavo.biblioteca;
 
+import com.gustavo.biblioteca.exception.LivroIndisponivelException;
 import com.gustavo.biblioteca.exception.LivroNaoEncontradoException;
 import com.gustavo.biblioteca.exception.UsuarioNaoEncontradoException;
 import com.gustavo.biblioteca.model.Livro;
@@ -146,7 +147,9 @@ public class Main {
 
         try {
             biblioteca.emprestarLivro(isbn, matricula, observacao);
-        } catch (LivroNaoEncontradoException | UsuarioNaoEncontradoException e) {
+        } catch (LivroNaoEncontradoException |
+                 UsuarioNaoEncontradoException |
+                 LivroIndisponivelException e) {
             System.out.println(e.getMessage());
         }
 
@@ -159,8 +162,12 @@ public class Main {
         System.out.print("Digite o ISBN do livro: ");
         String isbn = scanner.nextLine();
 
+        try {
+            biblioteca.devolverLivro(isbn);
+        } catch (LivroNaoEncontradoException e) {
+            System.out.println(e.getMessage());
+        }
 
-        biblioteca.devolverLivro(isbn);
     }
 
     private static List<Livro> livrosDisponiveis(BibliotecaService biblioteca) {
