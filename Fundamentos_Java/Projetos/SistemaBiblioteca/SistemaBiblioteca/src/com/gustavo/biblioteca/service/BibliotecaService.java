@@ -48,7 +48,7 @@ public class BibliotecaService {
         Usuario usuario = buscarUsuarioObrigatorio(matricula);
 
         if (!StatusLivro.DISPONIVEL.equals(livro.getStatus())) {
-            new LivroIndisponivelException("Livro indisponivel no momento!");
+            throw new LivroIndisponivelException("Livro indisponivel no momento!");
         }
 
         Emprestimo emprestimo = new Emprestimo(

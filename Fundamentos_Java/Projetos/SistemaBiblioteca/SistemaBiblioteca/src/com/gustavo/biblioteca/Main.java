@@ -1,5 +1,7 @@
 package com.gustavo.biblioteca;
 
+import com.gustavo.biblioteca.exception.LivroNaoEncontradoException;
+import com.gustavo.biblioteca.exception.UsuarioNaoEncontradoException;
 import com.gustavo.biblioteca.model.Livro;
 import com.gustavo.biblioteca.model.Usuario;
 import com.gustavo.biblioteca.service.BibliotecaService;
@@ -142,8 +144,12 @@ public class Main {
         System.out.print("Observação: ");
         String observacao = scanner.nextLine();
 
+        try {
+            biblioteca.emprestarLivro(isbn, matricula, observacao);
+        } catch (LivroNaoEncontradoException | UsuarioNaoEncontradoException e) {
+            System.out.println(e.getMessage());
+        }
 
-        biblioteca.emprestarLivro(isbn, matricula, observacao);
     }
 
     private static void devolverLivro(Scanner scanner, BibliotecaService biblioteca) {
